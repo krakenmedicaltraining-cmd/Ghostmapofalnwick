@@ -14,3 +14,26 @@
 
 /* V9 map explorer */
 .mapControls{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}.mapControls .btn{font-size:12px}.mapViewport{height:clamp(340px,62vw,650px);position:relative;overflow:hidden;border:7px solid #d4b29f;background:#201713;touch-action:none;cursor:grab;box-shadow:0 8px 25px #0005}.mapViewport:active{cursor:grabbing}.mapScene{position:absolute;inset:0;transform-origin:center;user-select:none}.mapScene>img{width:100%;height:100%;object-fit:fill;pointer-events:none}.mapScene>svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.mapPin{position:absolute;transform:translate(-50%,-50%);border:2px solid #f9e8d1;background:#77251f;color:white;min-width:34px;min-height:34px;border-radius:50%;font-weight:900;cursor:pointer;z-index:2;box-shadow:0 2px 8px #0008}.mapPin.verified{background:#3e7045}.mapPin span{display:block;position:absolute;top:32px;left:50%;transform:translateX(-50%);width:max-content;max-width:125px;background:#1b100ee8;color:#f8e7d8;padding:4px 7px;font:700 10px Arial,sans-serif;white-space:normal;pointer-events:none}.mapPin:focus-visible{outline:4px solid #ffda73}.mapControls+.paper{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px}.mapControls+.paper label{display:flex;align-items:center;gap:7px;font-size:14px}
+
+/* V9 responsive desktop and mobile investigation layout */
+@media(min-width:1000px){
+  .page{max-width:1500px;padding:24px 34px}
+  .page:has(.mapViewport)>.grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .mapViewport{height:min(68vh,850px);max-height:850px}
+  .mapControls{justify-content:flex-end}
+  .mapPin{min-width:42px;min-height:42px;font-size:15px}
+  .mapPin span{max-width:170px;font-size:12px}
+  .bottomNav{left:50%;transform:translateX(-50%);max-width:1000px;border-left:1px solid #8e6253;border-right:1px solid #8e6253}
+  .bottomNav button{font-size:12px}
+  .modalCard{max-width:1050px}
+  .locationArt{max-height:520px}
+}
+@media(min-width:700px) and (max-width:999px){
+  .mapViewport{height:560px}
+  .mapPin{min-width:40px;min-height:40px}
+}
+@media(max-width:699px){
+  .mapViewport{height:min(65vh,530px)}
+  .mapControls .btn{flex:1 1 auto;min-height:44px}
+  .mapPin span{max-width:95px;font-size:9px}
+}
