@@ -37,3 +37,17 @@
   .mapControls .btn{flex:1 1 auto;min-height:44px}
   .mapPin span{max-width:95px;font-size:9px}
 }
+
+/* V10 hybrid mode selection and remote archive */
+.modeChoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0}
+.modeChoices label{display:block;text-align:left;border:2px solid #785044;background:#f3dfcb;padding:15px;cursor:pointer;line-height:1.6}
+.modeChoices label:has(input:checked){border-color:#375d44;background:#e0ead8}
+.modeChoices input{accent-color:#375d44}
+.modeChoices small{display:block;font-size:13px}
+.modeBanner{display:flex;flex-wrap:wrap;align-items:center;gap:12px;background:#271714;color:#f5dfd2;padding:14px;margin:14px 0}
+.modeBanner span{flex:1;min-width:160px}
+.homeEvidence{background:#f0dfc6;border:2px solid #8d674a;padding:16px;margin:18px 0}
+.homeEvidence img{width:100%;max-height:240px;object-fit:contain}
+.homeEvidence details{padding:12px;background:#fff7e9;margin-top:12px}
+.homeEvidence summary{cursor:pointer;font-weight:bold;padding:8px}
+@media(min-width:950px){.modeChoices{grid-template-columns:1fr 1fr}}
