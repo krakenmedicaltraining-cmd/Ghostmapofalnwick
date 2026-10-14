@@ -1,4 +1,5 @@
 const $=s=>document.querySelector(s), app=$('#app'), modal=$('#modal'), modalBody=$('#modalBody');
+let mapState={scale:1,x:0,y:0},mapPointers=new Map(),mapStart=null;
 const cases=[
 {id:1,name:'Percy Tenantry Column',ghost:'The Bane',questions:['How many lions are there?','What three French words can you find?'],answers:[['5','five'],['esperance en dieu']],letter:'F',tape:'case01.mp3',art:'Percy Tenantry Column.png',ghostArt:'03(1).png'},
 {id:2,name:'Bondgate Tower & Playhouse',ghost:'Sir Melodramus',questions:['On the Playhouse, what date is found under GR?','What food does the judge favour most?'],answers:[['1817'],['chicken']],letter:'O',tape:'case02.mp3',art:'Bondgate Tower & Playhouse.png',ghostArt:'04(1).png'},
@@ -33,7 +34,7 @@ addMessage('harry','📷 GHOST CAMERA OPEN: I’ve switched the photo developing
 addMessage('harry','You’ll see some other bits of Edgar’s equipment in the Field Kit. They’re locked for now. If I get anything working, I’ll message you and the site will mark it as OPEN.',false)
 }}
 function updateMsgDot(){let d=document.querySelector('#msgDot'),n=Math.max(0,state.messages.length-(state.readMessages||0));if(d)d.innerHTML=n?`<span class="navBadge">${n}</span>`:''}
-function go(view){history.replaceState(null,'','#'+view);if(!state.name&&view!=='landing')return landing();if(view==='hunt')hunt();if(view==='desk')investigationDesk();if(view==='messages')messages();if(view==='scrapbook')scrapbook();if(view==='tapes')tapes();if(view==='settings')settings();window.scrollTo(0,0);updateMsgDot()}
+function go(view){history.replaceState(null,'','#'+view);if(!state.name&&view!=='landing')return landing();if(view==='hunt')hunt();if(view==='desk')window.investigationDesk();if(view==='messages')messages();if(view==='scrapbook')scrapbook();if(view==='tapes')tapes();if(view==='settings')settings();window.scrollTo(0,0);updateMsgDot()}
 document.addEventListener('click',e=>{let g=e.target.closest('[data-go]');if(g)go(g.dataset.go)});$('#closeModal').onclick=()=>{stopTools();stopRecorder();modal.classList.add('hidden')};function openModal(html){modalBody.innerHTML=html;modal.classList.remove('hidden')}
 function landing(){app.innerHTML=`<section class="landing"><div class="landingCard"><div class="eyebrow">THE ALNWICK GHOST HUNT</div><h1>EDGAR THORNCROFT'S LOST INVESTIGATION</h1><img class="innkeeper" src="assets/innkeeper.png" alt="Harry the Innkeeper"><p class="lead">You have Edgar Thorncroft’s diary. Harry, an Alnwick innkeeper, has been trying to discover what happened to him. Follow the ten locations, answer Edgar’s questions and collect the evidence he left behind.</p><p>Choose how you want to investigate. Both paths share the same mystery and progress.</p><div class="modeChoices"><label><input type="radio" name="playMode" value="walk" ${state.mode==='walk'?'checked':''}> <b>ALNWICK WALK</b><small>Visit the real locations. Use the map, diary and physical clues.</small></label><label><input type="radio" name="playMode" value="home" ${state.mode==='home'?'checked':''}> <b>HOME INVESTIGATION</b><small>Investigate remotely using archived field notes. No travel or GPS required.</small></label></div><p>Enter the investigator name you want printed on your certificate.</p><input id="landingName" class="nameInput" placeholder="Investigator name" value="${state.name||''}"><br><br><button class="btn dark" onclick="beginHunt()">BEGIN THE HUNT</button></div></section>`}
 window.beginHunt=()=>{let n=$('#landingName').value.trim();if(!n){$('#landingName').focus();return}state.name=n;state.mode=document.querySelector('input[name=playMode]:checked')?.value==='home'?'home':'walk';save();seedMessages();go('hunt')};
@@ -129,7 +130,7 @@ let q=new URLSearchParams(location.search),caseId=Number(q.get('case'));if(!stat
 
 /* V9 interactive illustrated map. Coordinates are editable percentages, not surveyed positions. */
 const mapPinPositions=[[62,76],[55,59],[46,55],[44,46],[51,52],[56,39],[32,29],[65,44],[78,39],[73,29]];
-let mapState={scale:1,x:0,y:0},mapPointers=new Map(),mapStart=null;
+
 window.toggleMapSettings=()=>document.getElementById('mapSettings')?.classList.toggle('hidden');
 window.drawMapRoute=()=>{
 const pins=document.getElementById('mapPins'),svg=document.getElementById('mapRoute');if(!pins||!svg)return;
